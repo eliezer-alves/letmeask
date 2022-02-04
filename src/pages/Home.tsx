@@ -1,52 +1,53 @@
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { firebase, auth } from '../services/firebase';
+
+import { Button } from '../components/Button';
+import { useContext } from 'react';
+import { AuthContext } from '../App';
 
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
 import '../styles/auth.scss';
-import { Button } from '../components/Button';
 
 export function Home() {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
+	const { user, signInWithGoogle } = useContext(AuthContext)
 
-    function handleCreateRoom() {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        
-        auth.signInWithPopup(provider).then(result => {
-            navigate('rooms/new');
-        }).catch(error => {
-            console.log(error);
-        });
+	async function handleCreateRoom() {
+		if (!user) {
+			await signInWithGoogle();
+		}
 
-    }
+		navigate('/rooms/new')
+	}
 
-    return (
-        <div id="page-auth">
-            <aside>
-                <img src={illustrationImg} alt="Ilustração simbolizando perguntas e respostas" />
-                <strong>Crie salas de Q&amp;A ao vivo</strong>
-                <p>Tire as dúvidas da sua audiência em tempo real</p>
-            </aside>
-            <main>
-                <div className="main-content">
-                    <img src={logoImg} alt="Letneask" />
-                    <button className="create-room" onClick={handleCreateRoom}>
-                        <img src={googleIconImg} alt="Ícone do Google" />
-                        Crie sua sala com o Goolge
-                    </button>
-                    <div className="separator">ou entre em uma sala</div>
-                    <form action="">
-                        <input
-                            type="text"
-                            placeholder="digite o código da sala"
-                        />
-                        <Button type="submit">Entrar na Sala</Button>                        
-                    </form>
-                </div>
-            </main>
-            
-        </div>
-    );
+	return (
+		<div id="page-auth">
+			<aside>
+				<img src={illustrationImg} alt="Ilustração simbolizando perguntas e respostas" />
+				<strong>Crie salas de Q&amp;A ao vivo</strong>
+				<p>Tire as dúvidas da sua audiência em tempo real</p>
+			</aside>
+			<main>
+				<div className="main-content">
+					<img src={logoImg} alt="Letneask" />
+					<button className="create-room" onClick={handleCreateRoom}>
+						<img src={googleIconImg} alt="Ícone do Google" />
+						Crie sua sala com o Goolge
+					</button>
+					<div className="separator">ou entre em uma sala</div>
+					<form action="">
+						<input
+							type="text"
+							placeholder="digite o código da sala"
+						/>
+						<Button type="submit">Entrar na Sala</Button>
+					</form>
+				</div>
+			</main>
+
+		</div>
+	);
 }
