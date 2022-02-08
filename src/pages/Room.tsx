@@ -19,8 +19,6 @@ export function Room() {
 
 	async function handleSendQuestion(e: FormEvent) {
 		e.preventDefault()
-		console.log('here');
-		
 
 		if (newQuestion.trim() === '') {
 			return;
@@ -42,7 +40,7 @@ export function Room() {
 		}
 
 		const resp = await database.ref(`rooms/${roomId}/questions`).push(question);
-		console.log(resp);
+		setNewQuestion('');
 		
 	}
 
@@ -68,7 +66,14 @@ export function Room() {
 						onChange={e => setNewQuestion(e.target.value)}
 					/>
 					<div className="form-footer">
-						<span>Para enviar uma pergunta, <button>faça seu login</button></span>
+						{ user ? (
+							<div className="user-info">
+								<img src={user.avatar} alt={user.name} />
+								<span>{user.name}</span>
+							</div>
+						) : (
+							<span>Para enviar uma pergunta, <button>faça seu login</button></span>	
+						)}						
 						<Button type="submit" disabled={!user}>Enviar Pergunta</Button>
 					</div>
 				</form>
