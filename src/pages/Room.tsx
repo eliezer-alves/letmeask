@@ -14,7 +14,7 @@ type FirebaseQuestions = Record<string, {
 	};
 	content: string;
 	isAnswered: boolean;
-	isHighLight: boolean;
+	isHighlighted: boolean;
 }>;
 
 type RoomParams = {
@@ -33,7 +33,19 @@ export function Room() {
 		roomRef.once('value', room => {
 			const databaseRoom = room.val();
 			const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-			const parsedQuestions = Object.entries(firebaseQuestions)
+			const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+				return {
+					id: key,
+					content: value.content,
+					author: value.author,
+					isHighlighted: value.isHighlighted,
+					isAnswered: value.isAnswered,
+
+				}
+			});
+
+			console.log(parsedQuestions);
+			
 			
 		});
 	
