@@ -1,11 +1,9 @@
 import deleteImg from '../assets/images/delete.svg';
-import { FormEvent, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
 import { RoomCode } from '../components/RoomCode';
-import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 import { database } from '../services/firebase';
 import '../styles/room.scss';
@@ -15,6 +13,7 @@ type RoomParams = {
 }
 
 export function AdminRoom() {
+	const navigate = useNavigate();
 	const params = useParams<RoomParams>();
 	const roomId = params.id ?? '';
 	const { title, questions } = useRoom(roomId);
@@ -25,6 +24,15 @@ export function AdminRoom() {
 		}
 	}
 
+	async function handleEndRoom() {
+		if (window.confirm('Tem certeza que deseja encerrar essa sala permanentemente?')) {
+			await database.ref(`rooms/${roomId}`).update({
+				endedAt: new Date()
+			});
+			navigate('/');
+		}
+	}
+
 	return (
 		<div id="page-room">
 			<header>
@@ -32,7 +40,7 @@ export function AdminRoom() {
 					<img src={logoImg} alt="Letmeask" />
 						<div>
 							<RoomCode code={params.id ?? ''}/>
-							<Button isOutlined>Encerrar sala</Button>
+							<Button onClick={handleEndRoom} isOutlined>Encerrar sala</Button>
 						</div>
 				</div>
 			</header>
