@@ -18,7 +18,7 @@ export function Home() {
 
 	async function handleCreateRoom() {
 		if (!user) {
-			signInWithGoogle();
+			await signInWithGoogle();
 		}
 
 		navigate('/rooms/new')
