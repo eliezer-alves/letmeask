@@ -1,6 +1,5 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { idText } from 'typescript';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
@@ -43,7 +42,7 @@ export function Room() {
 			isAnswered: false
 		}
 
-		const resp = await database.ref(`rooms/${roomId}/questions`).push(question);
+		await database.ref(`rooms/${roomId}/questions`).push(question);
 		setNewQuestion('');
 		
 	}
