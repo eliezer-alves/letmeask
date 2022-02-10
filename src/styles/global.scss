@@ -1,15 +1,25 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-    background-color: #f6f6f6;
-    color: #29292e;
+	background-color: #f6f6f6;
+	color: #29292e;
 }
 
-body, input, button, textarea {
-    font: 400 16px 'Roboto', sans-serif;
+body,
+input,
+button,
+textarea {
+	font: 400 16px "Roboto", sans-serif;
+}
+
+.active-icon {
+	color: #835afd !important;
+
+	svg path, svg circle {
+		stroke: #835afd !important;
+	}
 }
