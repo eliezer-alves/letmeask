@@ -12,7 +12,20 @@
 		
 
 			> img {
-				max-height: 45px;
+				max-height: 54px;				
+				transition: 0.1s;
+				
+				&:hover{
+					cursor: pointer;
+					transform: scale(1.02, 1.02);
+					filter: brightness(0.8);
+				}
+
+				&:active{
+					cursor: pointer;
+					transform: scale(0.9, 0.9);
+					filter: brightness(2);
+				}
 			}
 
 			> div {
