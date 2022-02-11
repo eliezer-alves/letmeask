@@ -110,6 +110,43 @@
 			}
 		}
 
+		.logout {
+			margin-top: 32px;
+			height: 50px;
+			border-radius: 8px;			
+			font-size: 14px;
+			color: #808085;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			border: 0;
+
+			transition: 0.2s;
+
+			span {
+				font-weight: 500;
+				margin: 5px 0 5px 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				img {
+					margin-left: 8px;
+					width: 24px;
+					border-radius: 50%;					
+				}
+			}
+
+			&:hover{
+				cursor: pointer;
+				transform: scale(1.2, 1.2);
+				color: rgb(64, 67, 71);
+			}
+		}
+
 		.separator {
 			font-size: 14x;
 			color: #a8a8b3;

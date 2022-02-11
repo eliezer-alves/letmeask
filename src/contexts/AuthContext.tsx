@@ -10,6 +10,7 @@ type User = {
 type AuthContextType = {
 	user: User | undefined;
 	signInWithGoogle: () => void;
+	logout: () => void;
 }
 
 type AuthContextProviderProps = {
@@ -57,8 +58,18 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 		}
 	}
 
+	async function logout() {		
+		if (window.confirm(`Tem certeza que não desej mais continuar como ${user?.name}?`)) {			
+			firebase.auth().signOut().catch(function(error) {
+				alert('Houve augum problema ao efetuar seu logout! Tente novamente.');
+			});
+		}
+
+		setUser(undefined);
+	}
+
 	return (
-		<AuthContext.Provider value={{ user, signInWithGoogle }}>
+		<AuthContext.Provider value={{ user, signInWithGoogle, logout }}>
 			{props.children}
 		</AuthContext.Provider>
 	);

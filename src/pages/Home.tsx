@@ -8,12 +8,13 @@ import { FormEvent, useState } from 'react';
 import { database } from '../services/firebase';
 import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
+import { log } from 'console';
 
 
 
 export function Home() {
 	const navigate = useNavigate();
-	const { user, signInWithGoogle } = useAuth();
+	const { user, signInWithGoogle, logout } = useAuth();
 	const [roomCode, setRoomCode] = useState('');
 
 	async function handleCreateRoom() {
@@ -46,6 +47,10 @@ export function Home() {
 		navigate(`rooms/${roomCode}`);
 	}
 
+	async function handleLogout() {		
+		await logout();
+	}
+
 	return (
 		<div id="page-auth">
 			<aside>
@@ -70,6 +75,15 @@ export function Home() {
 						/>
 						<Button type="submit">Entrar na Sala</Button>
 					</form>
+					{user?.name && (
+						<div className="logout" onClick={handleLogout}>
+							Não quero mais continuar como
+							<span>
+								{user.name}
+								<img src={user.avatar} alt="Usuário" />
+							</span>
+						</div>
+					)}
 				</div>
 			</main>
 
